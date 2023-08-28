@@ -543,6 +543,9 @@ public class ApplicacionTienda {
                                                     Venta bebidaVendida = new Venta(idVent, precioFinal, cantDeProductos, nombreProducVenta);
                                                     Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
                                                     bebidaVenta.setStock(nuevaCantDisponible);
+                                                    if (nuevaCantDisponible==0){
+                                                        bebidaVenta.setDisponibilidad(false);
+                                                    }
                                                     starkStore.actualizarSaldoVenta(precioBebida * cantDeProductos);
                                                     registroVentas.getRegistroDeVentas().add(bebidaVendida);
                                                     System.out.println(bebidaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + bebidaVendida.getPrecioPorUnidad());
@@ -553,6 +556,7 @@ public class ApplicacionTienda {
                                                             "menor al solicitado esta es la disponibilidad con la que contamos: " + CantidadDisponible);
                                                     Venta bebidaVendida = new Venta(idVent, precioFinal, bebidaVenta.getStock(), nombreProducVenta);
                                                     bebidaVenta.setStock(0);
+                                                    bebidaVenta.setDisponibilidad(false);
                                                     starkStore.actualizarSaldoVenta(precioBebida * CantidadDisponible);
                                                     registroVentas.getRegistroDeVentas().add(bebidaVendida);
                                                     System.out.println(bebidaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + bebidaVendida.getPrecioPorUnidad());
@@ -593,6 +597,9 @@ public class ApplicacionTienda {
                                                     Venta Envasadovendido = new Venta(idVent, precioFinal, cantDeProductos, nombreProducVenta);
                                                     Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
                                                     EnvasadoVenta.setStock(nuevaCantDisponible);
+                                                    if (nuevaCantDisponible==0){
+                                                        EnvasadoVenta.setDisponibilidad(false);
+                                                    }
                                                     registroVentas.getRegistroDeVentas().add(Envasadovendido);
                                                     starkStore.actualizarSaldoVenta(precioEnvasado * cantDeProductos);
                                                     System.out.println(Envasadovendido.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + Envasadovendido.getPrecioPorUnidad());
@@ -603,6 +610,7 @@ public class ApplicacionTienda {
                                                             "menor al solicitado esta es la disponibilidad con la que contamos: " + CantidadDisponible);
                                                     Venta EnvasadoVendida = new Venta(idVent, precioFinal, CantidadDisponible, nombreProducVenta);
                                                     EnvasadoVenta.setStock(0);
+                                                    EnvasadoVenta.setDisponibilidad(false);
                                                     starkStore.actualizarSaldoVenta(precioEnvasado * CantidadDisponible);
                                                     registroVentas.getRegistroDeVentas().add(EnvasadoVendida);
                                                     System.out.println(EnvasadoVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + EnvasadoVendida.getPrecioPorUnidad());
@@ -644,6 +652,9 @@ public class ApplicacionTienda {
                                                     registroVentas.getRegistroDeVentas().add(limpiezaVendida);
                                                     Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
                                                     LimpiezaVenta.setStock(nuevaCantDisponible);
+                                                    if (nuevaCantDisponible==0){
+                                                        LimpiezaVenta.setDisponibilidad(false);
+                                                    }
                                                     starkStore.actualizarSaldoVenta(precioLimpieza * cantDeProductos);
                                                     System.out.println(limpiezaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + limpiezaVendida.getPrecioPorUnidad());
                                                     System.out.println("Precio total: " + limpiezaVendida.getPrecioFinal());
@@ -653,6 +664,7 @@ public class ApplicacionTienda {
                                                             "menor al solicitado esta es la disponibilidad con la que contamos: " + CantidadDisponible);
                                                     Venta limpiezaVendida = new Venta(idVent, precioFinal, CantidadDisponible, nombreProducVenta);
                                                     LimpiezaVenta.setStock(0);
+                                                    LimpiezaVenta.setDisponibilidad(false);
                                                     starkStore.actualizarSaldoVenta(precioLimpieza * CantidadDisponible);
                                                     registroVentas.getRegistroDeVentas().add(limpiezaVendida);
                                                     System.out.println(limpiezaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + limpiezaVendida.getPrecioPorUnidad());
