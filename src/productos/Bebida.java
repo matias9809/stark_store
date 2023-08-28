@@ -9,7 +9,7 @@ public class Bebida extends Producto implements IComestible, IDescuento {
     private Double graducionAlcoholica;
     private Boolean importado;
     private LocalDate fechaVencimiento;
-    private Byte descuento;
+    private Byte descuento=0;
     private Byte impuesto;
 
     private double calorias;

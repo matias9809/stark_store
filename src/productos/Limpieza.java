@@ -4,7 +4,7 @@ import interfaces.IDescuento;
 
 public class Limpieza extends Producto implements IDescuento {
     private Enum tipoAplicacion;
-    protected Byte descuento;
+    protected Byte descuento=0;
 
     public Limpieza(Enum tipoAplicacion, String id, String nombre, String descripcion, Integer stock, Double precio, Double costo) {
         super(id,  descripcion,  stock,  precio,  costo,nombre);

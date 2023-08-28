@@ -95,17 +95,19 @@ public class Tienda {
         return "El producto se agrego a la lista correctamente";
     }
     public Producto encontrarProducto(String clave, String nombre) {
-        nombre.toUpperCase();
         if (this.stock.containsKey(clave)) {
             List<Producto> lista = this.stock.get(clave);
             System.out.println(lista);
             for (Producto producto : lista) {
-                if (producto.getNombre().toUpperCase().equals(nombre)) {
+                if (producto.getNombre().toUpperCase().equals(nombre.toUpperCase())) {
                     return producto;
                 }
             }
         }
         return null;
+    }
+    public void actualizarSaldoVenta(Double monto){
+        this.saldo+=monto;
     }
     public List<Producto> verProductos(){
         List<Producto> productos= new ArrayList<>();

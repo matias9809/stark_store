@@ -33,9 +33,9 @@ public class ApplicacionTienda {
         listaEnvasados.add(atun);
         Limpieza suavisante=new Limpieza(TipoAplicacion.ROPA,GeneradorDeId(Categoria.LIMPIEZA),"suavisante","suavisante con fragancia de lavanda de 3L",15,700.0*1.2,700.0);
         listaLimpieza.add(suavisante);
-        Bebida manaos=new Bebida(0.0,true,GeneradorDeId(Categoria.BEBIDA),"Manaos lima","Bebida con gas y azucares", 50,200.0*1.2,200.0);
+        Bebida manaos=new Bebida(0.0,false,GeneradorDeId(Categoria.BEBIDA),"Manaos lima","Bebida con gas y azucares", 50,200.0*1.1,200.0);
         listaBebidas.add( manaos);
-        Envasado arroz=new Envasado(TipoEnvase.LATA,false,GeneradorDeId(Categoria.ENVASADO),"arroz","Atun sumergido en aceite",30,190.0*1.2,190.0);
+        Envasado arroz=new Envasado(TipoEnvase.LATA,false,GeneradorDeId(Categoria.ENVASADO),"arroz","arroz",30,190.0*1.1,190.0);
         listaEnvasados.add(arroz);
         Limpieza jabon=new Limpieza(TipoAplicacion.ROPA,GeneradorDeId(Categoria.LIMPIEZA),"javon","javon con fragancia de lavanda de 3L",15,100.0*1.2,100.0);
         listaLimpieza.add(jabon);
@@ -43,14 +43,23 @@ public class ApplicacionTienda {
         starkStore.agregarListaProducto("Bebida",listaBebidas);
         starkStore.agregarListaProducto("Envasado",listaEnvasados);
         starkStore.agregarListaProducto("Limpieza",listaLimpieza);
-        System.out.println(starkStore.getStock());
-
+        List<Bebida> listaBebid=new ArrayList<>();
+        for (Producto prod:starkStore.getStock().get("Bebida")){
+             listaBebid.add((Bebida) prod);
+        }
+        List<Envasado> listaEnvas=new ArrayList<>();
+        for (Producto produc:starkStore.getStock().get("Envasado")){
+            listaEnvas.add((Envasado) produc);
+        }
+        obtenerComestiblesConMenorDescuento(15,listaEnvas ,listaBebid );
+        listarProductosConUtilidadesInferiores(15.0,starkStore);
         System.out.println("---------------------------------------------Bienvenido a "+nombre+"------------------------------------------");
         System.out.println("--------------------------si desea realizar una operacion presione cualquier tecla de caso" +
                 " contrario ingresar no--------------------------");
         String opcionIngreso=scan.nextLine();
 
         while (!opcionIngreso.equals("no")) {
+
             System.out.println("--------------------------¿que accion desea realizar?--------------------------");
             System.out.println("1:Comprar");
             System.out.println("2:vender");
@@ -110,7 +119,10 @@ public class ApplicacionTienda {
                                                         Bebida nuevaBevida = new Bebida(graduacionAlcoholica, importada, id,
                                                                 nombreProduc, descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Bebida", nuevaBevida);
+                                                        System.out.println("Codigo:");
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevaBevida.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     }
                                                     break;
                                                 case 2:
@@ -123,6 +135,8 @@ public class ApplicacionTienda {
                                                                 nombreProduc, descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Bebida", nuevaBevida);
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevaBevida.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     }
                                                     break;
                                                 default:
@@ -146,6 +160,8 @@ public class ApplicacionTienda {
                                                                 nombreProduc, descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Bebida", nuevaBevida);
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevaBevida.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     }
                                                     break;
                                                 case 2:
@@ -158,6 +174,8 @@ public class ApplicacionTienda {
                                                                 nombreProduc, descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Bebida", nuevaBevida);
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevaBevida.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     }
                                                     break;
                                                 default:
@@ -212,6 +230,8 @@ public class ApplicacionTienda {
                                                                 nombreProduc, descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Envasado", nuevoEnvasado);
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevoEnvasado.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     } else if (!saldoDisponible) {
                                                         System.out.println("El producto no podrá ser agregado a la tienda por\n" +
                                                                 "saldo insuficiente en la caja");
@@ -229,6 +249,8 @@ public class ApplicacionTienda {
                                                                 nombreProduc, descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Envasado", nuevoEnvasado);
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevoEnvasado.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     } else if (!saldoDisponible) {
                                                         System.out.println("El producto no podrá ser agregado a la tienda por\n" +
                                                                 "saldo insuficiente en la caja");
@@ -257,6 +279,8 @@ public class ApplicacionTienda {
                                                                 nombreProduc, descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Envasado", nuevoEnvasado);
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevoEnvasado.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     } else if (!saldoDisponible) {
                                                         System.out.println("El producto no podrá ser agregado a la tienda por\n" +
                                                                 "saldo insuficiente en la caja");
@@ -274,6 +298,8 @@ public class ApplicacionTienda {
                                                                 nombreProduc, descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Envasado", nuevoEnvasado);
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevoEnvasado.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     } else if (!saldoDisponible) {
                                                         System.out.println("El producto no podrá ser agregado a la tienda por\n" +
                                                                 "saldo insuficiente en la caja");
@@ -289,7 +315,7 @@ public class ApplicacionTienda {
                                             break;
 
                                         case 3:
-                                            tipoEnvase = TipoEnvase.PLASTICO;
+                                            tipoEnvase = TipoEnvase.VIDRIO;
                                             System.out.println("¿La bebida es importada? ingrese 1 si la respuesta es si de lo" +
                                                     " contrario ingrese 2");
                                             opcionAccion = scan.nextByte();
@@ -303,6 +329,8 @@ public class ApplicacionTienda {
                                                                 descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Envasado", nuevoEnvasado);
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevoEnvasado.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     }
                                                     break;
                                                 case 2:
@@ -313,6 +341,8 @@ public class ApplicacionTienda {
                                                         Envasado nuevoEnvasado = new Envasado(tipoEnvase, importada, id, nombreProduc, descripcion, cantidadProductos, precio, costo);
                                                         starkStore.agregarProducto("Envasado", nuevoEnvasado);
                                                         System.out.println("El producto fue registrado exitosamente");
+                                                        System.out.println(nuevoEnvasado.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                        System.out.println("Precio total: " + costo*cantidadProductos);
                                                     } else if (!saldoDisponible) {
                                                         System.out.println("El producto no podrá ser agregado a la tienda por\n" +
                                                                 "saldo insuficiente en la caja");
@@ -335,7 +365,7 @@ public class ApplicacionTienda {
 //-------------------------------------------------------Limpieza-------------------------------------------------------
                             case 3:
                                 TipoAplicacion tipoAplicacion;
-                                id = GeneradorDeId(Categoria.ENVASADO);
+                                id = GeneradorDeId(Categoria.LIMPIEZA);
                                 System.out.println("ingrese el nombre del producto: ");
                                 scan.nextLine();
                                 nombreProduc=scan.nextLine();
@@ -365,6 +395,8 @@ public class ApplicacionTienda {
                                                         cantidadProductos, precio, costo);
                                                 starkStore.agregarProducto("Envasado", nuevoLimpieza);
                                                 System.out.println("El producto fue registrado exitosamente");
+                                                System.out.println(nuevoLimpieza.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                System.out.println("Precio total: " + costo*cantidadProductos);
                                                 break;
                                             } else if (!saldoDisponible) {
                                                 System.out.println("El producto no podrá ser agregado a la tienda por\n" +
@@ -392,6 +424,8 @@ public class ApplicacionTienda {
                                                         cantidadProductos, precio, costo);
                                                 starkStore.agregarProducto("Envasado", nuevoLimpieza);
                                                 System.out.println("El producto fue registrado exitosamente");
+                                                System.out.println(nuevoLimpieza.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                System.out.println("Precio total: " + costo*cantidadProductos);
                                                 break;
                                             } else if (!saldoDisponible) {
                                                 System.out.println("El producto no podrá ser agregado a la tienda por\n" +
@@ -418,6 +452,8 @@ public class ApplicacionTienda {
                                                         cantidadProductos, precio, costo);
                                                 starkStore.agregarProducto("Limpieza", nuevoLimpieza);
                                                 System.out.println("El producto fue registrado exitosamente");
+                                                System.out.println(nuevoLimpieza.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                System.out.println("Precio total: " + costo*cantidadProductos);
                                             } else if (!saldoDisponible) {
                                                 System.out.println("El producto no podrá ser agregado a la tienda por\n" +
                                                         "saldo insuficiente en la caja");
@@ -444,6 +480,8 @@ public class ApplicacionTienda {
                                                         cantidadProductos, precio, costo);
                                                 starkStore.agregarProducto("Limpieza", nuevoLimpieza);
                                                 System.out.println("El producto fue registrado exitosamente");
+                                                System.out.println(nuevoLimpieza.getCodigo() + " " + nombreProduc + " " + cantidadProductos + "U" + " * $" + precio);
+                                                System.out.println("Precio total: " + costo*cantidadProductos);
                                             } else if (!saldoDisponible) {
                                                 System.out.println("El producto no podrá ser agregado a la tienda por\n" +
                                                         "saldo insuficiente en la caja");
@@ -471,7 +509,6 @@ public class ApplicacionTienda {
                         break;
 //-------------------------------------------------------Ventas---------------------------------------------------------
                     case 2:
-                        List<Venta> carrito = new ArrayList<>();
                         Integer cantDeProductos = 0;
                         Integer CantidadDisponible = 0;
                         Double precioFinal = 0.0;
@@ -497,44 +534,38 @@ public class ApplicacionTienda {
                                 idVent = generadorIdVentas(registroVentas);
 
                                 if (bebidaVenta != null) {
-                                    if (calcularDescuento(bebidaVenta.getPorcentajeDescuento(),"Bebida")) {
-                                        if (bebidaVenta.getDisponibilidad()) {
-                                            if (cantDeProductos <= 10 && cantDeProductos > 0) {
-                                                if (CantidadDisponible >= cantDeProductos) {
-                                                    Venta bebidaVendida = new Venta(idVent, precioFinal, cantDeProductos, nombreProducVenta);
-                                                    Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
-                                                    bebidaVenta.setStock(nuevaCantDisponible);
-                                                    registroVentas.getRegistroDeVentas().add(bebidaVendida);
-                                                    carrito.add(bebidaVendida);
-                                                    System.out.println(bebidaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + bebidaVendida.getPrecioPorUnidad());
-                                                    System.out.println("Precio total: " + bebidaVendida.getPrecioFinal());
-                                                    break;
-                                                } else if (CantidadDisponible < cantDeProductos && CantidadDisponible > 0) {
-                                                    System.out.println("Hay productos con stock disponible \n" +
-                                                            "menor al solicitado esta es la disponibilidad con la que contamos: " + CantidadDisponible);
-                                                    Venta bebidaVendida = new Venta(idVent, precioFinal, bebidaVenta.getStock(), nombreProducVenta);
-                                                    Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
-                                                    bebidaVenta.setStock(nuevaCantDisponible);
-                                                    registroVentas.getRegistroDeVentas().add(bebidaVendida);
-                                                    carrito.add(bebidaVendida);
-                                                    System.out.println(bebidaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + bebidaVendida.getPrecioPorUnidad());
-                                                    System.out.println("Precio total: " + bebidaVendida.getPrecioFinal());
-                                                    break;
-                                                } else {
-                                                    System.out.println("El producto no esta disponible");
-                                                    break;
-                                                }
-
+                                    if (bebidaVenta.getDisponibilidad()) {
+                                        if (cantDeProductos <= 10 && cantDeProductos > 0) {
+                                            if (CantidadDisponible >= cantDeProductos) {
+                                                Venta bebidaVendida = new Venta(idVent, precioFinal, cantDeProductos, nombreProducVenta);
+                                                Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
+                                                bebidaVenta.setStock(nuevaCantDisponible);
+                                                starkStore.actualizarSaldoVenta(precioBebida*cantDeProductos);
+                                                registroVentas.getRegistroDeVentas().add(bebidaVendida);
+                                                System.out.println(bebidaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + bebidaVendida.getPrecioPorUnidad());
+                                                System.out.println("Precio total: " + bebidaVendida.getPrecioFinal());
+                                                break;
+                                            } else if (CantidadDisponible < cantDeProductos && CantidadDisponible > 0) {
+                                                System.out.println("Hay productos con stock disponible \n" +
+                                                        "menor al solicitado esta es la disponibilidad con la que contamos: " + CantidadDisponible);
+                                                Venta bebidaVendida = new Venta(idVent, precioFinal, bebidaVenta.getStock(), nombreProducVenta);
+                                                bebidaVenta.setStock(0);
+                                                starkStore.actualizarSaldoVenta(precioBebida*CantidadDisponible);
+                                                registroVentas.getRegistroDeVentas().add(bebidaVendida);
+                                                System.out.println(bebidaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + bebidaVendida.getPrecioPorUnidad());
+                                                System.out.println("Precio total: " + bebidaVendida.getPrecioFinal());
+                                                break;
                                             } else {
-                                                System.out.println("La cantidad del producto solicitada es invalida");
+                                                System.out.println("El producto no esta disponible");
                                                 break;
                                             }
+
                                         } else {
-                                            System.out.println("El producto " + bebidaVenta.getCodigo() + " " + nombreProducVenta + " no se encuentra disponible");
+                                            System.out.println("La cantidad del producto solicitada es invalida");
                                             break;
                                         }
-                                    }else {
-                                        System.out.println("El descuento registrado para el producto"+bebidaVenta.getCodigo()+"no pudo ser aplicado");
+                                    } else {
+                                        System.out.println("El producto " + bebidaVenta.getCodigo() + " " + nombreProducVenta + " no se encuentra disponible");
                                         break;
                                     }
                                 } else {
@@ -553,37 +584,38 @@ public class ApplicacionTienda {
                                 precioFinal = precioEnvasado * cantDeProductos;
                                 idVent = generadorIdVentas(registroVentas);
                                 if (EnvasadoVenta != null) {
-                                    if (calcularDescuento(EnvasadoVenta.getPorcentajeDescuento(),"Envasado")) {
-                                        if (EnvasadoVenta.getDisponibilidad()) {
-                                            if (cantDeProductos <= 10 && cantDeProductos > 0) {
-                                                if (CantidadDisponible >= cantDeProductos) {
-                                                    Venta Envasadovendido = new Venta(idVent, precioFinal, cantDeProductos, nombreProducVenta);
-                                                    Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
-                                                    EnvasadoVenta.setStock(nuevaCantDisponible);
-                                                    registroVentas.getRegistroDeVentas().add(Envasadovendido);
-                                                    carrito.add(Envasadovendido);
-                                                    System.out.println(Envasadovendido.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + Envasadovendido.getPrecioPorUnidad());
-                                                    System.out.println("Precio total: " + Envasadovendido.getPrecioFinal());
-                                                    break;
-                                                } else if (CantidadDisponible < cantDeProductos && CantidadDisponible > 0) {
-                                                    System.out.println("Hay productos con stock disponible \n" +
-                                                            "menor al solicitado esta es la disponibilidad con la que contamos: " + CantidadDisponible);
-                                                    break;
-                                                } else {
-                                                    System.out.println("El producto no esta disponible");
-                                                    break;
-                                                }
-
+                                    if (EnvasadoVenta.getDisponibilidad()) {
+                                        if (cantDeProductos <= 10 && cantDeProductos > 0) {
+                                            if (CantidadDisponible >= cantDeProductos) {
+                                                Venta Envasadovendido = new Venta(idVent, precioFinal, cantDeProductos, nombreProducVenta);
+                                                Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
+                                                EnvasadoVenta.setStock(nuevaCantDisponible);
+                                                registroVentas.getRegistroDeVentas().add(Envasadovendido);
+                                                starkStore.actualizarSaldoVenta(precioEnvasado*cantDeProductos);
+                                                System.out.println(Envasadovendido.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + Envasadovendido.getPrecioPorUnidad());
+                                                System.out.println("Precio total: " + Envasadovendido.getPrecioFinal());
+                                                break;
+                                            } else if (CantidadDisponible < cantDeProductos && CantidadDisponible > 0) {
+                                                System.out.println("Hay productos con stock disponible \n" +
+                                                        "menor al solicitado esta es la disponibilidad con la que contamos: " + CantidadDisponible);
+                                                Venta EnvasadoVendida = new Venta(idVent, precioFinal, CantidadDisponible, nombreProducVenta);
+                                                EnvasadoVenta.setStock(0);
+                                                starkStore.actualizarSaldoVenta(precioEnvasado*CantidadDisponible);
+                                                registroVentas.getRegistroDeVentas().add(EnvasadoVendida);
+                                                System.out.println(EnvasadoVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + EnvasadoVendida.getPrecioPorUnidad());
+                                                System.out.println("Precio total: " + EnvasadoVendida.getPrecioFinal());
+                                                break;
                                             } else {
-                                                System.out.println("La cantidad del producto solicitada es invalida");
+                                                System.out.println("El producto no esta disponible");
                                                 break;
                                             }
+
                                         } else {
-                                            System.out.println("El producto " + EnvasadoVenta.getCodigo() + " " + nombreProducVenta + " no se encuentra disponible");
+                                            System.out.println("La cantidad del producto solicitada es invalida");
                                             break;
                                         }
-                                    }else {
-                                        System.out.println("El descuento registrado para el producto"+EnvasadoVenta.getCodigo()+"no pudo ser aplicado");
+                                    } else {
+                                        System.out.println("El producto " + EnvasadoVenta.getCodigo() + " " + nombreProducVenta + " no se encuentra disponible");
                                         break;
                                     }
                                 } else {
@@ -602,37 +634,38 @@ public class ApplicacionTienda {
                                 precioFinal = precioLimpieza * cantDeProductos;
                                 idVent = generadorIdVentas(registroVentas);
                                 if (LimpiezaVenta != null) {
-                                    if (calcularDescuento(LimpiezaVenta.getPorcentajeDescuento(),"Limpieza")) {
-                                        if (LimpiezaVenta.getDisponibilidad()) {
-                                            if (cantDeProductos <= 10 && cantDeProductos > 0) {
-                                                if (CantidadDisponible >= cantDeProductos) {
-                                                    Venta limpiezaVendida = new Venta(idVent, precioFinal, cantDeProductos, nombreProducVenta);
-                                                    registroVentas.getRegistroDeVentas().add(limpiezaVendida);
-                                                    Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
-                                                    LimpiezaVenta.setStock(nuevaCantDisponible);
-                                                    carrito.add(limpiezaVendida);
-                                                    System.out.println(limpiezaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + limpiezaVendida.getPrecioPorUnidad());
-                                                    System.out.println("Precio total: " + limpiezaVendida.getPrecioFinal());
-                                                    break;
-                                                } else if (CantidadDisponible < cantDeProductos && CantidadDisponible > 0) {
-                                                    System.out.println("Hay productos con stock disponible \n" +
-                                                            "menor al solicitado esta es la disponibilidad con la que contamos: " + CantidadDisponible);
-                                                    break;
-                                                } else {
-                                                    System.out.println("El producto no esta disponible");
-                                                    break;
-                                                }
-
+                                    if (LimpiezaVenta.getDisponibilidad()) {
+                                        if (cantDeProductos <= 10 && cantDeProductos > 0) {
+                                            if (CantidadDisponible >= cantDeProductos) {
+                                                Venta limpiezaVendida = new Venta(idVent, precioFinal, cantDeProductos, nombreProducVenta);
+                                                registroVentas.getRegistroDeVentas().add(limpiezaVendida);
+                                                Integer nuevaCantDisponible = (CantidadDisponible - cantDeProductos);
+                                                LimpiezaVenta.setStock(nuevaCantDisponible);
+                                                starkStore.actualizarSaldoVenta(precioLimpieza*cantDeProductos);
+                                                System.out.println(limpiezaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + limpiezaVendida.getPrecioPorUnidad());
+                                                System.out.println("Precio total: " + limpiezaVendida.getPrecioFinal());
+                                                break;
+                                            } else if (CantidadDisponible < cantDeProductos && CantidadDisponible > 0) {
+                                                System.out.println("Hay productos con stock disponible \n" +
+                                                        "menor al solicitado esta es la disponibilidad con la que contamos: " + CantidadDisponible);
+                                                Venta limpiezaVendida = new Venta(idVent, precioFinal, CantidadDisponible, nombreProducVenta);
+                                                LimpiezaVenta.setStock(0);
+                                                starkStore.actualizarSaldoVenta(precioLimpieza*CantidadDisponible);
+                                                registroVentas.getRegistroDeVentas().add(limpiezaVendida);
+                                                System.out.println(limpiezaVendida.getId() + " " + nombreProducVenta + " " + cantDeProductos + "U" + " * $" + limpiezaVendida.getPrecioPorUnidad());
+                                                System.out.println("Precio total: " + limpiezaVendida.getPrecioFinal());
+                                                break;
                                             } else {
-                                                System.out.println("La cantidad del producto solicitada es invalida");
+                                                System.out.println("El producto no esta disponible");
                                                 break;
                                             }
+
                                         } else {
-                                            System.out.println("El producto " + LimpiezaVenta.getCodigo() + " " + nombreProducVenta + " no se encuentra disponible");
+                                            System.out.println("La cantidad del producto solicitada es invalida");
                                             break;
                                         }
-                                    }else {
-                                        System.out.println("El descuento registrado para el producto"+LimpiezaVenta.getCodigo()+"no pudo ser aplicado");
+                                    } else {
+                                        System.out.println("El producto " + LimpiezaVenta.getCodigo() + " " + nombreProducVenta + " no se encuentra disponible");
                                         break;
                                     }
                                 } else {
@@ -643,42 +676,11 @@ public class ApplicacionTienda {
                         break;
 //-------------------------------------------------------lista----------------------------------------------------------
                     case 3:
-                        System.out.println("seleccione una opcion: \n"+
-                                "1:Lista completa \n"+
-                                "2:Listas de productos con menor descuento \n"+
-                                "3:Listas de productos con menor ganancia");
-                        List<Bebida> listaBebid;
-                        List<Envasado> listaEnvas;
-                        Double porcentaje;
-                        opcionAccion= scan.nextByte();
-                        switch (opcionAccion) {
-                            case 1:
-                                for (Producto producto : starkStore.verProductos()) {
-                                    System.out.println("------------------------------------------------------------------------");
-                                    System.out.println("Codigo: " + producto.getCodigo() + "\n" + "nombre: " + producto.getNombre() + "\n" + "cantidad: " + producto.getStock() + "\n" + "precio: $" + producto.getPrecio() + "\n" + "disponibilidad: " + producto.getDisponibilidad());
-                                    System.out.println("------------------------------------------------------------------------");
-                                }
-                                break;
-                            case 2:
-                                System.out.println("ingrese el porcentaje de descuentos: ");
-                                porcentaje= scan.nextDouble();
-                                listaBebid=new ArrayList<>();
-                                for (Producto prod:starkStore.getStock().get("Bebida")){
-                                    listaBebid.add((Bebida) prod);
-                                }
-                                listaEnvas=new ArrayList<>();
-                                for (Producto produc:starkStore.getStock().get("Envasado")){
-                                    listaEnvas.add((Envasado) produc);
-                                }
-                                System.out.println(obtenerComestiblesConMenorDescuento(porcentaje, listaBebid,listaEnvas));
-                                break;
-                            case 3:
-                                System.out.println("ingrese el porcentaje de ganancia: ");
-                                porcentaje= scan.nextDouble();
-                                System.out.println(listarProductosConUtilidadesInferiores(porcentaje,starkStore));
-                                break;
-                        }
-                    break;
+                            for (Producto producto : starkStore.verProductos()) {
+                                System.out.println("------------------------------------------------------------------------");
+                                System.out.println("Codigo: " + producto.getCodigo() + "\n" + "nombre: " + producto.getNombre() + "\n" + "cantidad: " + producto.getStock() + "\n" + "precio: $" + producto.getPrecio() + "\n" + "disponibilidad: " + producto.getDisponibilidad());
+                                System.out.println("------------------------------------------------------------------------");
+                            }
                 }
 
             }catch (Exception e){

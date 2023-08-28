@@ -9,7 +9,7 @@ public class Envasado extends Producto implements IComestible, IDescuento {
     private Enum tipoEnvase;
     private Boolean importado;
     private LocalDate fechaVencimiento;
-    private Byte descuento;
+    private Byte descuento=0;
     private Short impuesto;
     private double calorias;
 

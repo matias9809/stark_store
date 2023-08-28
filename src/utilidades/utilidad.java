@@ -99,34 +99,48 @@ public class utilidad {
         }
         return true;
     }
-    public static List<String> obtenerComestiblesConMenorDescuento(Double porcentajeDesc,List<Bebida> listaBebid, List<Envasado> listaEnvas){
-//        List<String> listaConMenorDesc=new ArrayList<>();
-//        for (Bebida produc:listaBebid){
-//            if (!produc.getImportado()&&produc.getPorcentajeDescuento()<porcentajeDesc) {
-//                listaConMenorDesc.add(produc.getNombre().toUpperCase());
-//            }
-//        }
-//        for (Envasado produc:listaEnvas){
-//            if (!produc.getImportado()&&produc.getPorcentajeDescuento()<porcentajeDesc) {
-//                listaConMenorDesc.add(produc.getNombre().toUpperCase());
-//            }
-//        }
-        List<String> listaBebidas=listaBebid.stream()
-                .filter(beb->!beb.getImportado()&&beb.getPorcentajeDescuento()<porcentajeDesc)
-                .sorted(Comparator.comparingDouble(Bebida::getPrecio))
-                .map(be->be.getNombre().toUpperCase())
-                .collect(toList());
-        List<String> listaEnvasados=listaEnvas.stream()
-                .filter(env->!env.getImportado()&&env.getPorcentajeDescuento()<porcentajeDesc)
+    public static List<String> obtenerComestiblesConMenorDescuento(double porcentajeDescuento,List<Envasado> productosEnvasados, List<Bebida> productosBebidas) {
+        List<String> productoEnvasadoList = productosEnvasados.stream()
+                .filter(p -> !p.getImportado()  && p.getPorcentajeDescuento() < porcentajeDescuento)
                 .sorted(Comparator.comparingDouble(Envasado::getPrecio))
-                .map(be->be.getNombre().toUpperCase())
-                .collect(toList());
-        List<String> listaConMenorDesc= Stream.of(listaBebidas,listaEnvasados).flatMap(Collection::stream).sorted().collect(toList());
-        return listaConMenorDesc;
+                .map(p -> p.getNombre().toUpperCase())
+                .collect(Collectors.toList());
+
+        List<String> productoBebidaList = productosBebidas.stream()
+                .filter(productoBebida -> !productoBebida.getImportado() && productoBebida.getPorcentajeDescuento() < porcentajeDescuento)
+                .sorted(Comparator.comparingDouble(Bebida::getPrecio))
+                .map(productoBebida -> productoBebida.getNombre().toUpperCase())
+                .collect(Collectors.toList());
+
+
+        List<String> productosComestiblesConMenorDescuento = Stream.of(productoBebidaList, productoEnvasadoList)
+                .flatMap(Collection::stream)
+                .sorted()
+                .collect(Collectors.toList());
+
+        System.out.println(productosComestiblesConMenorDescuento);
+        return productosComestiblesConMenorDescuento;
     }
-    public static List<Producto> listarProductosConUtilidadesInferiores(Double porcentaje, Tienda tienda){
-        List<Producto> lista=tienda.getStock().get("Bebida").stream().filter(beb->(beb.getPrecio()*beb.getCosto() )*100<porcentaje).collect(toList());
-        return lista;
+    public static void listarProductosConUtilidadesInferiores(Double porcentaje, Tienda tienda){
+        List<String> productoBebidaList=tienda.getStock().get("Bebida")
+                .stream().filter(beb->((beb.getPrecio()/beb.getCosto())-1 )*100<porcentaje)
+                .map(Bebida ->Bebida.getCodigo()+" "+ Bebida.getNombre().toUpperCase()+" "+Bebida.getStock())
+                .collect(toList());
+        List<String> productoEnvasadoList=tienda.getStock().get("Envasado")
+                .stream()
+                .filter(Env->((Env.getPrecio()/Env.getCosto())-1 )*100<porcentaje)
+                .map(Envasado ->Envasado.getCodigo()+" "+ Envasado.getNombre().toUpperCase()+" "+Envasado.getStock())
+                .collect(toList());
+        List<String> productoLimpiezaList=tienda.getStock().get("Limpieza")
+                .stream()
+                .filter(Lim->((Lim.getPrecio()/Lim.getCosto())-1 )*100<porcentaje)
+                .map(Limpieza ->Limpieza.getCodigo()+" "+ Limpieza.getNombre().toUpperCase()+" "+Limpieza.getStock())
+                .collect(toList());
+        List<String> productosConMenorGanacia = Stream.of(productoBebidaList, productoEnvasadoList,productoLimpiezaList)
+                .flatMap(Collection::stream)
+                .sorted()
+                .collect(Collectors.toList());
+        System.out.println(productosConMenorGanacia);
     }
 
 
